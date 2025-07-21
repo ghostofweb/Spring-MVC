@@ -9,5 +9,5 @@ import com.runnerapp.web.models.Club;
 
 @Repository
 public interface ClubRepository extends JpaRepository<Club, Long>{
-    Optional<Club>findByTitle(Long url );
+    Optional<Club>findByTitle(String url );
 }
