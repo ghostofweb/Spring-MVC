@@ -43,4 +43,27 @@ public class ClubServiceIml implements ClubService {
     public Club saveClub(Club club) {
         return clubRepository.save(club);
     }
+
+    @Override
+    public ClubDto findClubById(long clubId) {
+        Club club = clubRepository.findById(clubId).get();
+        return mapToClubDto(club);
+    }
+
+    @Override
+    public void updateClub(ClubDto clubDto) {
+        Club club = mapToClub(clubDto);
+        clubRepository.save(club);
+    }
+
+    private Club mapToClub(ClubDto club) {
+        Club clubDto = Club.builder()
+                .id(club.getId())
+                .photoUrl(club.getPhotoUrl())
+                .content(club.getContent())
+                .createdOn(club.getCreatedOn())
+                .updatedOn(club.getUpdatedOn())
+                .build();
+        return clubDto;
+    }
 }
