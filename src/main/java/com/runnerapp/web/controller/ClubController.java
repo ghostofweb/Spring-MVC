@@ -12,9 +12,6 @@ import com.runnerapp.web.dto.ClubDto;
 import com.runnerapp.web.models.Club;
 import com.runnerapp.web.service.ClubService;
 
-
-
-
 @Controller
 public class ClubController {
     private ClubService clubService;
@@ -34,13 +31,13 @@ public class ClubController {
     @GetMapping("/clubs/new")
     public String createClubForm(Model model) {
         Club club = new Club();
-        model.addAttribute("clubs",club);
+        model.addAttribute("club",club);
         return "clubs-create";
     }
     
     @PostMapping("/clubs/new")
-    public String saveClub(@ModelAttribute("club") Club club){
-        clubService.save();
+    public String saveClub(@ModelAttribute("club") Club club){ 
+        clubService.saveClub(club);
         return "redirect:/clubs";
     }
     

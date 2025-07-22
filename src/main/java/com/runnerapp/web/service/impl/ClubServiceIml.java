@@ -41,6 +41,6 @@ public class ClubServiceIml implements ClubService {
 
     @Override
     public Club saveClub(Club club) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return clubRepository.save(club);
     }
 }
