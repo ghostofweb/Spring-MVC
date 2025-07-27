@@ -50,9 +50,9 @@
                 <div th:each="club : ${clubs}" class="col-lg-6">
                     <div class="position-relative mb-5">
                         <img class="img-fluid rounded-3 mb-3" th:src="${club.photoUrl}" alt="Club Image"/>
-                        <a class="h3 fw-bolder text-decoration-none link-dark stretched-link"
+                        <a
                            th:text="${club.title}"
-                           th:href="@{/clubs/{clubId}/edit(clubId=${club.id})}">
+                           th:href="@{/clubs/{clubId}/edit(clubId=${club.id})}">sahiljeet
                         </a>
                         <div class="mt-2">
                             <a class="btn btn-sm btn-primary"

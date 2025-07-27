@@ -33,6 +33,7 @@
                             th:field="*{title}"
                             placeholder="Enter club title" />
                 </div>
+                <div class="text-danger" th:errors="*{title}"></div>
                 <div class="col-md-6">
                     <label for="photoUrl" class="form-label">Photo URL</label>
                     <input
@@ -42,6 +43,7 @@
                             th:field="*{photoUrl}"
                             placeholder="Enter photo URL" />
                 </div>
+                <div class="text-danger" th:errors="*{photoUrl}"></div>
             </div>
 
             <div class="mb-3">
@@ -53,10 +55,13 @@
                         th:field="*{content}"
                         placeholder="Enter club description/content" />
             </div>
-
+            <div class="text-danger" th:errors="*{content}"></div>
             <button type="submit" class="btn btn-primary">Create Club</button>
         </form>
     </div>
+    <form method="post" th:action="@{/clubs/{clubId}/delete(clubId=${club.id})}" class="d-inline">
+        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+    </form>
 </main>
 
 <!-- Bootstrap Bundle JS -->
