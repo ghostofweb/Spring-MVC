@@ -17,7 +17,7 @@ public class EventDto {
     private long id;
     private String name;
     private LocalDateTime startTime;
-    private LocalDateTime endTIme;
+    private LocalDateTime endTime;
     private String type;
     private String photoUrl;
     private LocalDateTime createdOn;

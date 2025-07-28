@@ -1,0 +1,44 @@
+package com.runnerapp.web.service.impl;
+
+import com.runnerapp.web.dto.EventDto;
+import com.runnerapp.web.models.Club;
+import com.runnerapp.web.models.Event;
+import com.runnerapp.web.repository.ClubRepository;
+import com.runnerapp.web.repository.EventRepository;
+import com.runnerapp.web.service.EventService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class EventServiceIml implements EventService {
+    private EventRepository eventRepository;
+    private ClubRepository clubRepository;
+
+    @Autowired
+    public EventServiceIml(EventRepository eventRepository, ClubRepository clubRepository) {
+        this.eventRepository = eventRepository;
+        this.clubRepository = clubRepository;
+    }
+
+    @Override
+    public void createEvent(Long clubId, EventDto eventDto) {
+    Club club = clubRepository.findById(clubId).get();
+    Event event = mapToEvent(eventDto);
+    event.setClub(club);
+    eventRepository.save(event);
+    }
+
+    private Event mapToEvent(EventDto eventDto) {
+        return Event.builder()
+                .id(eventDto.getId())
+                .name(eventDto.getName())
+                .type(eventDto.getType())
+                .startTime(eventDto.getStartTime())
+                .endTime(eventDto.getEndTime())
+                .photoUrl(eventDto.getPhotoUrl())
+                .createdOn(eventDto.getCreatedOn())
+                .updatedOn(eventDto.getUpdatedOn())
+                .build();
+
+    }
+}

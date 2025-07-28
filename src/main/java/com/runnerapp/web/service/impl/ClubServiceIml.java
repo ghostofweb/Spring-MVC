@@ -21,14 +21,13 @@ public class ClubServiceIml implements ClubService {
     @Override
     public List<ClubDto> findAllClubs() {
          List<Club> clubs =clubRepository.findAll();
-
          return clubs.stream()
          .map((club) -> mapToClubDto(club))
          .collect(Collectors.toList());
         
     }
     private ClubDto mapToClubDto(Club club){
-        ClubDto clubDto = ClubDto.builder()
+        return ClubDto.builder()
         .id(club.getId())
         .title(club.getTitle())
         .photoUrl(club.getPhotoUrl())
@@ -36,7 +35,6 @@ public class ClubServiceIml implements ClubService {
         .createdOn(club.getCreatedOn())
         .updatedOn(club.getUpdatedOn())
         .build();
-    return clubDto;
     }
 
     @Override
