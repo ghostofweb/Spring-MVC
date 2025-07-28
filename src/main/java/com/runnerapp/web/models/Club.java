@@ -1,14 +1,12 @@
 package com.runnerapp.web.models;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
+import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,4 +30,6 @@ public class Club {
     @UpdateTimestamp
     private LocalDateTime updatedOn;
 
+    @OneToMany(mappedBy = "club", cascade = CascadeType.REMOVE)
+    private Set<Event> events = new HashSet<>();
 }
