@@ -11,4 +11,5 @@ Club saveClub(Club club);
 ClubDto findClubById(long clubId);
 void updateClub(ClubDto club);
 void deleteClub(Long clubId);
+List<ClubDto> searchClubs(String query);
 }

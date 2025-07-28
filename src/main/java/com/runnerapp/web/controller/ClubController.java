@@ -33,12 +33,9 @@ public class ClubController {
         model.addAttribute("club",club);
         return "clubs-create";
     }
-    
+
     @PostMapping("/clubs/new")
-    public String saveClub(@Valid @ModelAttribute("club") Club club,BindingResult result){
-        if(result.hasErrors()){
-            return "clubs-edit";
-        }
+    public String saveClub(@Valid @ModelAttribute("club") Club club){
         clubService.saveClub(club);
         return "redirect:/clubs";
     }
@@ -52,7 +49,10 @@ public class ClubController {
 
     @PostMapping("/clubs/{clubId}")
     public String updateClub(@PathVariable("clubId") Long clubId,
-                             @ModelAttribute("club") ClubDto club){
+                             @Valid @ModelAttribute("club") ClubDto club, BindingResult result){
+        if(result.hasErrors()){
+            return "clubs-edit";
+        }
         club.setId(clubId);
         clubService.updateClub(club);
         return "redirect:/clubs";
@@ -61,8 +61,22 @@ public class ClubController {
     @PostMapping("/clubs/{clubId}/delete")
     public String deleteClub(@PathVariable("clubId") Long clubId){
         clubService.deleteClub(clubId);
-        return "redirect:/club";
+        return "redirect:/clubs";
     }
 
+    @GetMapping("/clubs/{clubId}/details")
+    public String clubDetail(@PathVariable("clubId") long clubId, Model model){
+        ClubDto clubdto = clubService.findClubById(clubId);
+        model.addAttribute("club",clubdto);
+        return "clubs-detail";
+
+    }
+
+    @GetMapping("/clubs/search")
+    public String searchClub(@RequestParam(value = "query")String query,Model model){
+    List<ClubDto> clubs = clubService.searchClubs(query);
+    model.addAttribute("clubs",clubs);
+    return "clubs-list";
+    }
 
 }
