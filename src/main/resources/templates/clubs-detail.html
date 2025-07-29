@@ -29,11 +29,35 @@
             </p>
 
             <a th:href="@{/clubs/{clubId}/edit(clubId=${club.id})}" class="btn btn-primary mt-3">Edit Club</a>
+            <a th:href="@{/events/{clubId}/new(clubId=${club.id})}" class="btn btn-primary mt-3">Create Event</a>
         </div>
     </div>
 
         <a th:href="@{/clubs}" class="btn btn-secondary mt-3">Back to Clubs List</a>
+        <h3 class="mt-5">Events</h3>
 
+        <div class="row" th:if="${club.events != null and !club.events.isEmpty()}">
+            <div class="col-md-4 mb-4" th:each="event : ${club.events}">
+                <div class="card h-100 shadow-sm">
+                    <img th:if="${event.photoUrl}" th:src="${event.photoUrl}" class="card-img-top" alt="Event Photo" style="height: 200px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${event.name}">Event Name</h5>
+                        <p class="card-text">
+                            <strong>Type:</strong> <span th:text="${event.type}">Event Type</span><br/>
+                            <strong>Start:</strong> <span th:text="${#temporals.format(event.startTime, 'dd-MM-yyyy HH:mm')}">Start Time</span><br/>
+                            <strong>End:</strong> <span th:text="${#temporals.format(event.endTime, 'dd-MM-yyyy HH:mm')}">End Time</span>
+                        </p>
+                    </div>
+                    <div class="card-footer text-muted">
+                        Created: <span th:text="${#temporals.format(event.createdOn, 'dd-MM-yyyy HH:mm')}">Created On</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div th:if="${club.events == null or club.events.isEmpty()}">
+            <p class="text-muted">No events have been added for this club yet.</p>
+        </div>
     </div>
 </main>
 

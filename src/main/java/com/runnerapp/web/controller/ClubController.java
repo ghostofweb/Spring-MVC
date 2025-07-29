@@ -41,8 +41,8 @@ public class ClubController {
     }
 
     @GetMapping("/clubs/{clubId}/edit")
-    public String editClub(@PathVariable("clubId")long clubID,Model model){
-        ClubDto club = clubService.findClubById(clubID);
+    public String editClub(@PathVariable("clubId")long clubId,Model model){
+        ClubDto club = clubService.findClubById(clubId);
         model.addAttribute("club",club);
         return "clubs-edit";
     }

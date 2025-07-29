@@ -9,10 +9,13 @@ import com.runnerapp.web.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class EventServiceIml implements EventService {
-    private EventRepository eventRepository;
-    private ClubRepository clubRepository;
+    private final EventRepository eventRepository;
+    private final ClubRepository clubRepository;
 
     @Autowired
     public EventServiceIml(EventRepository eventRepository, ClubRepository clubRepository) {
@@ -28,7 +31,14 @@ public class EventServiceIml implements EventService {
     eventRepository.save(event);
     }
 
-    private Event mapToEvent(EventDto eventDto) {
+    @Override
+    public List<EventDto> findAllEvents() {
+        List<Event> events= eventRepository.findAll();
+        return events.stream().map(event -> mapToEventDto(event)).collect(Collectors.toList());
+
+    }
+
+    public static Event mapToEvent(EventDto eventDto) {
         return Event.builder()
                 .id(eventDto.getId())
                 .name(eventDto.getName())
@@ -38,6 +48,20 @@ public class EventServiceIml implements EventService {
                 .photoUrl(eventDto.getPhotoUrl())
                 .createdOn(eventDto.getCreatedOn())
                 .updatedOn(eventDto.getUpdatedOn())
+                .build();
+
+    }
+
+    public static EventDto mapToEventDto(Event event) {
+        return EventDto.builder()
+                .id(event.getId())
+                .name(event.getName())
+                .type(event.getType())
+                .startTime(event.getStartTime())
+                .endTime(event.getEndTime())
+                .photoUrl(event.getPhotoUrl())
+                .createdOn(event.getCreatedOn())
+                .updatedOn(event.getUpdatedOn())
                 .build();
 
     }

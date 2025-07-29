@@ -26,16 +26,24 @@ public class ClubServiceIml implements ClubService {
          .collect(Collectors.toList());
         
     }
-    private ClubDto mapToClubDto(Club club){
+    private ClubDto mapToClubDto(Club club) {
         return ClubDto.builder()
-        .id(club.getId())
-        .title(club.getTitle())
-        .photoUrl(club.getPhotoUrl())
-        .content(club.getContent())
-        .createdOn(club.getCreatedOn())
-        .updatedOn(club.getUpdatedOn())
-        .build();
+                .id(club.getId())
+                .title(club.getTitle())
+                .photoUrl(club.getPhotoUrl())
+                .content(club.getContent())
+                .createdOn(club.getCreatedOn())
+                .updatedOn(club.getUpdatedOn())
+                .events(
+                        club.getEvents() != null
+                                ? club.getEvents().stream()
+                                .map(EventServiceIml::mapToEventDto)
+                                .collect(Collectors.toList())
+                                : null
+                )
+                .build();
     }
+
 
     @Override
     public Club saveClub(Club club) {
@@ -66,13 +74,13 @@ public class ClubServiceIml implements ClubService {
     }
 
     private Club mapToClub(ClubDto club) {
-        Club clubDto = Club.builder()
+        return Club.builder()
                 .id(club.getId())
                 .photoUrl(club.getPhotoUrl())
                 .content(club.getContent())
                 .createdOn(club.getCreatedOn())
                 .updatedOn(club.getUpdatedOn())
+                .events(club.getEvents().stream().map(event -> EventServiceIml.mapToEvent(event)).collect(Collectors.toList()))
                 .build();
-        return clubDto;
     }
 }
